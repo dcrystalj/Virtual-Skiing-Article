@@ -1,0 +1,21 @@
+This folder contains LaTeX and BibTeX classes for the preparation of submissions
+to the ICST Transactions:
+
+  ** icst.cls **
+   Documentclass for ICST Transactions submissions.
+
+  ** icstnum.bst **
+   BibTeX style for the ICST Transactions, to be used for numbered citations.
+
+  ** icstauth.bst **
+   BibTeX style for the ICST Transactions, to be used for author-year citations.
+
+  ** ICSTdoc.pdf **
+   PDF documentation describing how to use the ICST LaTeX and BibTeX styles.
+
+  ** icstdoc.tex **
+   LaTeX source for the documentation.  You can browse this for an example
+   of the ICST documentclass in use.
+
+  ** icst-transactions-latex.zip **
+   Archive file containing all the above files.
