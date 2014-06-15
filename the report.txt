@@ -31,7 +31,7 @@ To control the direction of ski, user need to band their body left or right to t
 
 The user need to squat to increase the speed, and detection of squatting is needed. When squatting, the position of the node on hip is changing obviously. So, the node on hip is used to determine whether the user is squatting or not.
 
-2.3. Unity 3D game engine
+2.3. Unity 3D game engine - written by Tomaz
 
 3. developing process
 
@@ -43,19 +43,47 @@ A mindmap is made to record all the ideas about the project. It gives the team s
 
 3.1.2 Research
 
-Kinect:
 At the beginning of the project, none of the team member knows anything about programming on Kinect, it is the main focus of search. We found that Kinect SDK is essential in coding the sensor, it comes together with Kinect studio and a developer toolkit. Kinect studio is just for testing and the developer toolkit is a package of code examples.
 
-Game engine:
-It took us almost no time to search for game engine, one of the team member knows how to use Unity 3D, certainly this becomes your choice of game engine. 
+For the displaying of the virtual skiing world, it took us almost no time to search for game engine, one of the team member knows how to use Unity 3D, certainly this becomes your choice of game engine. 
 
-3.1.3 Designing the system
+3.1.3 Divide the work
 
-3.2 work on the project
+The work of the project can be divided into two main parts, the input(Kinect) and output(the display). Chin Chung will work on Kinect, figure out how it works; Tomaz will work on the game engine, create a virtual 3D world for the user to ski on. 
 
-3.3 replanning
+3.2 work on the project (Unity) - written by Tomaz
+
+3.3 work on the project (Kinect) - written by Chin Chung
+
+The first attemt to work on Kinect was a failure, not until I start working on it, I didn't notice the underlying problems. I did get the skeleton of the user, retrieving some data from it, but they are not very useful. I faced three main problems in this part. 
+
+3.3.1 C# language
+
+I did learn several languages before, but not C#. When I read the code, I understand them in a very low level, I recognize almost all the syntex, the loops, conditionals, declarations... etc. It took me really a lot of time to get to a higher level of understanding. The documentations from Microsoft was not very useful, it maybe enough for an experienced C# programmer, not for me. 
+
+3.3.2 Mathematics
+
+After a lot of reading, I finally locate the part where the orientation of the nodes/joints are stored. The orientations of the nodes are expressed in rotation quaternions , an absolutely alien term for me. I checked the documentation, wikipedia and other sites, they all explain it is a very mathematical way. The main direction I studied is software engineering, the mathematics they are using are far beyond my level. I just leave the output in the form of rotation quaternion.
+
+3.3.3 The developing environment
+
+I used the Microsoft visual studio in the part, mainly because most tutorials on Kinect are also on this environment. Problem comes when my part needs to merge with the game engine, I have no idea how to do it. Just importing the scripts in visual studio was not enough, the scripts will not run automatically. Scripts need to link to game objects in order to get running. Also the displaying machanism is very different in Visual Studio and Unity 3D, I don't know how to translate the code.
+
+3.3 rework
+
+A replan is needed because the Kinect part and the Unity 3D part of the project was not mergeable. Another research is done to find Kinect code example directly in Unity 3D, not in Visual Studio. 
+
+3.3.1 Kinect in Unity 3D
+
+Code example was found in Unity 3D wiki, this time the whole Kinect part is coded only in the game engine. Work done in Visual Studio is repeated in Unity 3D, it was a lot smoother than before because of the experience gained. Instead of the rotational quaternion, a simpular axis system is used to compare the postions of the Joints. 
+
+3.3.2 C# and Javascript
+
+The code is until not fully compatable, the graphics part uses Javascript and the Kinect part uses C#. A way to transfer data between scripts in two langauges is found, and the problem is fully solved.
 
 3.4 ending
+
+
 
 4. conclutions
 
