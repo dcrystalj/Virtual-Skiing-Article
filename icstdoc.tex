@@ -59,13 +59,6 @@ To control the direction of ski, user need to band their body left or right to t
 \subsubsection{Speed}
 The user need to squat to increase the speed, and detection of squatting is needed. When squatting, the position of the node on hip is changing obviously. So, the node on hip is used to determine whether the user is squatting or not.
 
-\subsection{Unity 3D}
-Unity is a development engine for the creation of 2D and 3D games and interactive content. It has multiplatform support and own asset store where you can download scripts, objects, scenes.. \cite{UNITY}
-
-\subsubsection{Terrain}
-It has great support for creating terrain. In game we created simple terrain with mountains and put snow on it. For more flexible terrain we could create scirpt or just few images of pre-difined heightmaps. Unity have option to generate terrain using hightmap.
-\subsubsection{Scripting}
-Unity support C\#, javascript and Boo scripting languages. It also supports applying different languaged script on same object. We used such ability for user movement in skiing game, using javascript and C\# languages only.
 
 \section{Developing process}
 \subsection{Planning}
@@ -80,15 +73,16 @@ A mindmap is made to record all the ideas about the project. It gives the team s
 \end{figure}
 
 \subsection{Research}
-\subsubsection{Kinect}
 At the beginning of the project, none of the team member knows anything about programming on Kinect, it is the main focus of search. We found that Kinect SDK is essential in coding the sensor, it comes together with Kinect studio and a developer toolkit. Kinect studio is just for testing and the developer toolkit is a package of code examples.
 
-\subsubsection{Game engine}
-It took us almost no time to search for game engine, one of the team member knows how to use Unity 3D, certainly this becomes your choice of game engine. 
+For the displaying of the virtual skiing world, it took us almost no time to search for game engine, one of the team member knows how to use Unity 3D, certainly this becomes your choice of game engine. 
 
-\subsubsection{Designing the system}
+\subsection{Divide the work}
+The work of the project can be divided into two main parts, the input(Kinect) and output(the display). Chin Chung will work on Kinect, figure out how it works; Tomaz will work on the game engine, create a virtual 3D world for the user to ski on. 
 
-\subsection{Work on the project}
+\subsection{Unity}
+Unity is a development engine for the creation of 2D and 3D games and interactive content. It has multiplatform support and own asset store where you can download scripts, objects, scenes.. \cite{UNITY}
+We found kinect wrapper package\cite{MERGE} for Unity3D engine, which added us easy option to get collected data from kinect directly to our script code in unity. We used this data to calculate angle between different joints. With this angle we are then able to set intensity of turning sensitivity. To gamify our enviroment we put score counter in top left corner, which get increased by colliding carracter with advertised flags on the way down. To allow kinect detecting the human body and give user time to prepare we put countdown at the beginning of game.
 
 \begin{figure}
     \centering
@@ -97,23 +91,47 @@ It took us almost no time to search for game engine, one of the team member know
     \label{fig:awesome_image}
 \end{figure}
 
-\subsection{Replanning}
+\subsubsection{Terrain}
+It has great support for creating terrain. In game we created simple terrain with mountains and put snow on it. For more flexible terrain we could create scirpt or just few images of pre-difined heightmaps. Unity have option to generate terrain using hightmap.
 
-\subsection{Ending}
+\subsubsection{Scripting}
+Unity support C\#, javascript and Boo scripting languages. It also supports applying different languaged script on same object. We used such ability for user movement in skiing game, using javascript and C\# languages only.
+
+
+
+
+\subsection{Kinect}
+The first attemt to work on Kinect was a failure, not until I start working on it, I didn't notice the underlying problems. I did get the skeleton of the user, retrieving some data from it, but they are not very useful. I faced three main problems in this part. 
+
+\subsubsection{C\#}
+I did learn several languages before, but not C\#. When I read the code, I understand them in a very low level, I recognize almost all the syntex, the loops, conditionals, declarations... etc. It took me really a lot of time to get to a higher level of understanding. The documentations from Microsoft was not very useful, it maybe enough for an experienced C\# programmer, not for me.
+
+\subsubsection{Mathematics}
+fter a lot of reading, I finally locate the part where the orientation of the nodes/joints are stored. The orientations of the nodes are expressed in rotation quaternions , an absolutely alien term for me. I checked the documentation, wikipedia and other sites, they all explain it is a very mathematical way. The main direction I studied is software engineering, the mathematics they are using are far beyond my level. I just leave the output in the form of rotation quaternion.
+
+\subsubsection{Developing evniroment}
+I used the Microsoft visual studio in the part, mainly because most tutorials on Kinect are also on this environment. Problem comes when my part needs to merge with the game engine, I have no idea how to do it. Just importing the scripts in visual studio was not enough, the scripts will not run automatically. Scripts need to link to game objects in order to get running. Also the displaying machanism is very different in Visual Studio and Unity 3D, I don't know how to translate the code.
+
+\subsection{Rework}
+A replan is needed because the Kinect part and the Unity 3D part of the project was not mergeable. Another research is done to find Kinect code example directly in Unity 3D, not in Visual Studio. 
+
+\subsubsection{Kinect in Unity 3D}
+Code example was found in Unity 3D wiki, this time the whole Kinect part is coded only in the game engine. Work done in Visual Studio is repeated in Unity 3D, it was a lot smoother than before because of the experience gained. Instead of the rotational quaternion, a simpular axis system is used to compare the postions of the Joints. 
+
+\subsubsection{C\# and Javascript}
+The code is until not fully compatable, the graphics part uses Javascript and the Kinect part uses C\#. A way to transfer data between scripts in two langauges is found, and the problem is fully solved.
+
 
 \section{Conclusions}
-
-\subsection{Schedule (planned vs read)}
-a
-
-sub
-
+We were able to make game playable by setting correct parameters such as speed, turning speed, gliding and gravity accelleration. Project has been succesfully finished and requirements has been fullfield.
 
 \begin{thebibliography}{9}
 
 \bibitem{ORIG} \textsc{Solina Franc} and \textsc{Batagelj Borut} (2005) \emph{http://black.fri.uni-lj.si/ski/}
 
-\bibitem{UNITY} \textsc{Unity 3D} (2014) \emph{\LaTeX: \url{http://docs.unity3d.com/ScriptReference/index.html}}
+\bibitem{UNITY} \textsc{Unity 3D} (2014) \emph{\url{http://docs.unity3d.com/ScriptReference/index.html}}
+
+\bibitem{MERGE} \textsc{Microsoft SDK} \emph{\url{http://wiki.etc.cmu.edu/unity3d/index.php/Microsoft_Kinect_-_Microsoft_SDK}}
 
 \end{thebibliography}
 \end{document}
