@@ -7,12 +7,14 @@
 \usepackage[breaklinks,colorlinks,bookmarksopen,bookmarksnumbered,linkcolor=ICSTblue,citecolor=ICSTblue,urlcolor=ICSTblue]{hyperref}
 \usepackage{breakurl}
 \usepackage{doi}
+\usepackage{float}
+\usepackage{graphicx}
 
 
 \newcommand\BibTeX{{\rmfamily B\kern-.05em \textsc{i\kern-.025em b}\kern-.08em
 T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
-\def\volumeyear{2011}
+\def\volumeyear{2014}
 
 \begin{document}
 
@@ -28,252 +30,90 @@ T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
 \keywords{skiing, kincect, unity 3D, virtual}
 
-\tnotetext[1]{Please ensure that you use the most up to date
-class file,
-available from XXXXX at \dots
-%\href{}{}}
-}
-
-\fnotetext[1]{Corresponding author. \email{Create-net address?}}
 
 \maketitle
 
 \section{Introduction}
-The interactive installation "Virtual skiing" enables a visual immersion into the feelings of gliding on snow through a winter landscape. The computer rendered winter landscape is displayed over the entire wall in front of the skier. As on real skis you can regulate the speed of descent by changing the posture of your body so that the air resistance is decreased or increased. By shifting the weight of your body to the right or left ski you can make turns down the slope between the snow capped trees. The interface to the virtual world is implemented by computer vision techniques which capture the posture of the skier’s body. \cite{ORIG}).
+The interactive installation "Virtual skiing" enables a visual immersion into the feelings of gliding on snow through a winter landscape. The computer rendered winter landscape is displayed over the entire wall in front of the skier. As on real skis you can regulate the speed of descent by changing the posture of your body so that the air resistance is decreased or increased. By shifting the weight of your body to the right or left ski you can make turns down the slope between the snow capped trees. The interface to the virtual world is implemented by computer vision techniques which capture the posture of the skier's body. \cite{ORIG}).
 
-\section{The three golden rules}
-Before we proceed, we would like to stress \emph{three golden
-rules} that need to be followed to enable the most efficient use
-of your code at the typesetting stage:
+\section{Software overview}
+\subsection{Goal of the project}
+The goal of the project is to provide the user a virtual skiing experience. To do so, at least the following needs to be done:
 \begin{enumerate}
-\item[(i)] keep your own macros to an absolute minimum;
-
-\item[(ii)] as \TeX\ is designed to make sensible spacing
-decisions by itself, do \emph{not} use explicit horizontal or
-vertical spacing commands, except in a few accepted (mostly
-mathematical) situations, such as \verb"\," before a
-differential~d, or \verb"\quad" to separate an equation from its
-qualifier;
-
-\item[(iii)] follow the \emph{\journalnamelc} reference style.
+\item[(i)] track body movement of the user
+\item[(ii)] display a virtual 3D environment on a screen
+\item[(iii)] play game in this enviroment
 \end{enumerate}
 
-\section{Getting started}
-The \textsf{\journalclassshort} class file should run
-on any standard \LaTeXe\ installation. If any of the fonts, style
-files or packages it requires are missing from your installation,
-they can be found on the \emph{\TeX\ Collection} DVDs or from
-CTAN.
 
-\emph{\journalnamelc} are published using a combination of Kp-Fonts
-and Iwona typefaces. This is achieved by using the \verb"fonts"
-option as\\
-\verb"\documentclass[fonts]{icst}".
+\subsection{Kinect}
+\subsubsection{Overview}
+Kinect is the most convienent body movement tracking hardware we can find in the market, it thus becomes the tool for our project. The Kinect sensor haveo one RGB camera and two Infra-red sensors, allowing it to track movement to/from any direction in a 3D space. 
 
-\noindent If for any reason you have a problem using this
-combination you can easily resort to Computer Modern fonts by
-removing the \verb"fonts" option.
+\subsubsection{Code}
+By examining the sample code, a skeleton of user is made using C\#. A skeleton consist of nodes and lines, nodes representing the the joints of the user, lines representing the limbs/body of the user. By comparing the positions nodes, we can capture the user's movement and turn them into inputs in the game.There are 2 main types of input in the skiing game, one controls the direction and the other controls the speed of skiing.
 
-\begin{figure*}
-\setlength{\fboxsep}{0pt}%
-\setlength{\fboxrule}{0pt}%
-\begin{center}
-\begin{boxedverbatim}
-\documentclass[fonts]{icst}
-%\documentclass[fonts,doublespace]{icst}%For paper submission
+\subsubsection{Directions}
+To control the direction of ski, user need to band their body left or right to turn, or stay in the middle to go straight. A simple method is used to extract this particular movement by the user, we simply compare the nodes on both shoulders. The data obtained is then threasholded into only 3 inputs, left, middle and right. 
 
-\begin{document}
+\subsubsection{Speed}
+The user need to squat to increase the speed, and detection of squatting is needed. When squatting, the position of the node on hip is changing obviously. So, the node on hip is used to determine whether the user is squatting or not.
 
-\runningheads{<Initials and Surnames>}{<Short title>}
+\subsection{Unity 3D}
+Unity is a development engine for the creation of 2D and 3D games and interactive content. It has multiplatform support and own asset store where you can download scripts, objects, scenes.. \cite{UNITY}
 
-\title{<Initial caps>}
-%\title{<Initial caps>\tnoteref{1}}
+\subsubsection{Terrain}
+It has great support for creating terrain. In game we created simple terrain with mountains and put snow on it. For more flexible terrain we could create scirpt or just few images of pre-difined heightmaps. Unity have option to generate terrain using hightmap.
+\subsubsection{Scripting}
+Unity support C\#, javascript and Boo scripting languages. It also supports applying different languaged script on same object. We used such ability for user movement in skiing game, using javascript and C\# languages only.
 
-\author{<An Author\affil{1}, Someone Else\affil{2}\fnoteref{1},
-Perhaps Another\affil{1}>}
-
-\address{<\affilnum{1}First author's address
-(in this example it is the same as the third author)\\
-\affilnum{2}Second author's address>}
-
-%\tnotetext[1]{<Footnote to the title, if needed>}
-
-\fnotetext[1]{Corresponding author. \email{<email address>}}
-%Corresponding author is the second author in this example
-
-%\fnotetext[2]{<Text as needed>}
-
-\abstract{<Text>}
-
-\keywords{<List keywords>}
-
-\maketitle
-
-\section{Introduction}
-.
-.
-.
-\end{boxedverbatim}
-\end{center}
-%\vspace{-12pt}
-\caption{Example header text\label{F1}}
-\end{figure*}
-
-
-\section{The article header information}
-The heading for any file using \textsf{\journalclass} is shown in
-Figure~\ref{F1}.
-
-\subsection{Remarks}
-\begin{enumerate}
-\item[(i)] In \verb"\runningheads" use `\emph{et~al.}' if there
-are four or more authors.
-
-\item[(ii)] Note the use of \verb"\tnoteref{<id num>}" and \verb "\tnotetext[<id num>]{<Text>}" for setting footnotes to the title
-
-Also note the use of \verb"\fnoteref{<id num>}" and
-\verb"\fnotetext[<id num>]{<Text>}" for setting footnotes to author names. At
-least one of these must identify the `Corresponding author' (as in the example shown in Figure~\ref{F1})
-
-\item[(iii)] For submitting a double-spaced manuscript, add
-\verb"doublespace" as an option to the documentclass line.
-
-\item[(iv)] The abstract should be capable of standing by itself,
-in the absence of the body of the article and of the bibliography.
-Therefore, it must not contain any reference citations.
-
-\item[(v)] Keywords are separated by commas.
-\end{enumerate}
+\section{Developing process}
+\subsection{Planning}
+\subsubsection{Mindmap}
+A mindmap is made to record all the ideas about the project. It gives the team some guide and direction to work on. This is also the step where we know each team member's strength and weakness, leads to better allocation of work later on. 
 
 \begin{figure}
-\setlength{\fboxsep}{0pt}%
-\setlength{\fboxrule}{0pt}%
-\begin{center}
-\begin{boxedverbatim}
-\begin{table}\small\sf
-\caption{<Table caption>}
-\centering
-\begin{tabular}{<table alignment>}
-\toprule
-<column headings>\\
-\midrule
-<table entries
-(separated by & as usual)>\\
-<table entries>\\
-.
-.
-.\\
-\bottomrule
-\end{tabular}
-\end{table}
-\end{boxedverbatim}
-\end{center}
-\caption{Example table layout\label{F2}}
+    \centering
+    \includegraphics[width=0.4\textwidth]{mindmap.png}
+    \caption{Mindmap}
+    \label{fig:awesome_image}
 \end{figure}
 
-\section{The body of the article}
+\subsection{Research}
+\subsubsection{Kinect}
+At the beginning of the project, none of the team member knows anything about programming on Kinect, it is the main focus of search. We found that Kinect SDK is essential in coding the sensor, it comes together with Kinect studio and a developer toolkit. Kinect studio is just for testing and the developer toolkit is a package of code examples.
 
-\subsection{Mathematics} \textsf{\journalclass} makes the full
-functionality of \AmS\/\TeX\ available. We encourage the use of
-the \verb"align", \verb"gather" and \verb"multline" environments
-for displayed mathematics. \textsf{amsthm} is used for setting
-theorem-like and proof environments. The usual \verb"\newtheorem"
-command needs to be used to set up the environments for your
-particular document.
+\subsubsection{Game engine}
+It took us almost no time to search for game engine, one of the team member knows how to use Unity 3D, certainly this becomes your choice of game engine. 
 
-\subsection{Figures and Tables} \textsf{\journalclass} includes the
-\textsf{graphicx} package for handling figures.
+\subsubsection{Designing the system}
 
-Figures are called in as follows:
-\begin{verbatim}
+\subsection{Work on the project}
+
 \begin{figure}
-\centering
-\includegraphics{<figure name>}
-\caption{<Figure caption>}
+    \centering
+    \includegraphics[width=0.4\textwidth]{game.png}
+    \caption{Screenshot form skiing game.}
+    \label{fig:awesome_image}
 \end{figure}
-\end{verbatim}
 
-For further details on how to size figures, etc., with the
-\textsf{graphicx} package see, for example, \cite{R1}
-or \cite{R3}. If figures are available in an
-acceptable format (for example, .eps, .ps) they will be used but a
-printed version should always be provided. \medbreak
+\subsection{Replanning}
 
-The standard coding for a table is shown in Figure~\ref{F2}.
+\subsection{Ending}
 
-\subsection{Cross-referencing}
-The use of the \LaTeX\ cross-reference system
-for figures, tables, equations, etc., is encouraged
-(using \verb"\ref{<name>}" and \verb"\label{<name>}").
+\section{Conclusions}
 
-\subsection{Appendices}
-Code appendices as follows.
-\begin{verbatim}
-\begin{appendices}
-\section{<The first appendix title>}
-.
-.
-.
-\subsection{The first subappendix}
+\subsection{Schedule (planned vs read)}
+a
 
-\appendix
-\section{<The second appendix title>}
-.
-.
-.
-\end{appendices}
-\end{verbatim}
+sub
 
-
-\subsection{Acknowledgements} An Acknowledgements section is started with \verb"\ack" or
-\verb"\acks" for \textit{Acknowledgement} or
-\textit{Acknowledgements}, respectively. It must be placed just
-before the References.
-
-\subsection{Bibliography}
-The \emph{\journalnamelc} allows either the Vancouver or Harvard
-reference style. The default style is Vancouver, but the Harvard
-style can be achieved easily by using the \verb"authoryear"
-option as:\\
-\verb"\documentclass[...,authoryear]{icst}".
-
-Please note that the file \textsf{icst.bst} is available from the
-same download page for those authors using \BibTeX\ (which works
-for Harvard or Vancouver style references).
-
-\subsection{Double Spacing}
-If you need to double space your document for submission please
-use the \verb+doublespace+ option as shown in the sample layout in
-Figure~\ref{F1}.
-
-\section{Support for \textsf{\journalclass}}
-We offer on-line support to participating authors. Please contact
-us via e-mail at \dots
-
-We would welcome any feedback, positive or otherwise, on your
-experiences of using \textsf{\journalclass}.
-
-\section{Copyright statement}
-Please  be  aware that the use of  this \LaTeXe\ class file is
-governed by the following conditions.
-
-\subsection{Copyright}
-\verb+<To be decided>+
-
-\subsection{Rules of Use}
-\verb+<To be decided>+
-
-\ack This class file was developed by Sunrise Setting Ltd,
-Torquay, Devon, UK. Website:\\
-\href{http://www.sunrise-setting.co.uk}{\texttt{www.sunrise-setting.co.uk}}
 
 \begin{thebibliography}{9}
 
 \bibitem{ORIG} \textsc{Solina Franc} and \textsc{Batagelj Borut} (2005) \emph{http://black.fri.uni-lj.si/ski/}
 
-\bibitem{R2} \textsc{Lamport~L.} (1994) \emph{\LaTeX: a Document Preparation System}
-(Addison-Wesley), 2nd~ed.
+\bibitem{UNITY} \textsc{Unity 3D} (2014) \emph{\LaTeX: \url{http://docs.unity3d.com/ScriptReference/index.html}}
 
-\bibitem{R3} \textsc{Mittelbach~F.} and \textsc{Goossens~M} (2004) \emph{The \LaTeX\ Companion} (Addison-Wesley), 2nd~ed.
 \end{thebibliography}
 \end{document}
